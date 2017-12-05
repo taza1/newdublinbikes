@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bike-rental-Dublin</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <div id="header">
+    
+  </div>
+  <div id="menu">
+    <div id="navbar">
+      <ul>
+        <li><a href="/items">Products</a></li>
+        <%#= link_to 'Profiles', profiles_path %>
+        <li><a href="/profiles">Profiles</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/contact">Contact Us</a></li>
+        <li><a href="/admin">Login</a></li>
+        <li><a href="/logout">Logout</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="container">
+    <div id="content">
+      <p class="notice"><%= flash[:notice] %></p>
+      <p class="alert"><%= flash[:alert] %></p>
+      <%= yield %>
+      
+      <% if user_signed_in? %>
+        <div>Signed <%= current_user.email %> (<%= link_to "Sign Out", destroy_user_session_path, :method => :delete %>)</div>
+      <% else %>
+        <%= link_to 'Register', new_user_registration_path %> or <% link_to 'Sign in', new_user_session_path %>
+      <% end %>
+      
+    </div>
+    <div id="first-column">
+        <div class="loginbox">
+          <h2 class="Boxheaders">Login here...</h2>
+        </div>
+        <div class="searchbox">
+          <h2 class="BoxHeaders">Search Catalog</h2>
+          <p id="notice"><%= notice %></p>
+          <p> search </p>
+          <% form_tag(profiles_path, :method => "get", id: "search-form") do %>
+          <%= text_field_tag :search, params[:search], placeholder: "Search Profile by Lastname" %>
+          <%= submit_tag "Search" %>
+         <% end %>
+        </div>
+    </div>
+  </div>
+  <div id="footer">
+    <h6 class="footertext">&copy; Dublin bikes powered by Heroku &trade; 2018</h6>
+  </div>
+
+</body>
+</html>
